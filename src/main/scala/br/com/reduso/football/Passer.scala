@@ -19,6 +19,9 @@ import br.com.reduso.football.Pass.{PassResult, Missed, CouldNotHold, Completed}
  *  
  */
 
+/**
+ * TODO: give passer and receiver different tests
+ */
 trait Passer {
 
   require(dice.faces == 6)

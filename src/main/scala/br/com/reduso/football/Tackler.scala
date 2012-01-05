@@ -19,6 +19,10 @@ import br.com.reduso.football.Tackle.{TackleResult,Disposed,Loose,Failure}
  *  
  */
 
+
+/**
+ * TODO: give tackler and tackled different tests.
+ */
 trait Tackler {
 
   require(dice.faces == 6)
