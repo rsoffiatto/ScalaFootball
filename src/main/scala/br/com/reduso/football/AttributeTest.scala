@@ -24,7 +24,7 @@ class AttributeTest private (private val dice: Dice) {
   def test(attribute: Int): Result = {
     dice.roll match {
       case 1 => AttributeTest.AutoFailure
-      case it if 2 until 5 contains it => if (it > attribute) AttributeTest.Failure else AttributeTest.Success
+      case it if 2 to 5 contains it => if (it > attribute) AttributeTest.Failure else AttributeTest.Success
       case 6 => AttributeTest.AutoSuccess
     }
   }

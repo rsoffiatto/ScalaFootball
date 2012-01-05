@@ -71,7 +71,7 @@ class AttributeTestSpec  extends WordSpec with GivenWhenThen {
 
     "Be a failure when the attribute is smaller than the number rolled" in {
       given("A attribute test")
-      val attributeTest = AttributeTest(new TestDices.ArbitraryDice(faces=6, results=3))
+      val attributeTest = AttributeTest(new TestDices.ArbitraryDice(faces=6, results=5))
 
       when("the dice roll result is bigger than the attribute")
       val result = attributeTest.test(2)
