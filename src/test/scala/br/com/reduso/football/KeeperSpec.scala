@@ -3,7 +3,7 @@ package br.com.reduso.football
 import org.scalatest.{GivenWhenThen, WordSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import br.com.reduso.football.TestDices.{SeqDice, SuccessDice}
+import br.com.reduso.football.TestDices.{ArbitraryDice, SeqDice, SuccessDice}
 
 /**
  * Copyright 2011 Renato Duarte Soffiatto
@@ -27,48 +27,112 @@ class KeeperSpec  extends WordSpec with GivenWhenThen {
 
   "a goal keeper" should {
     
-    "defend sucessfully a shot" in {
+    "sucessfully hold a shot with a auto-success when the keeper try to intercept" in {
       
       given("a keeper")
       val keeper = new {
-        val dice: Dice = new SuccessDice(6)
+        val dice: Dice = new SeqDice(faces=6, results=Seq(6, 1))
+        val intercept = 3
+        val hold = 3
       } with Keeper
 
       when("he tries to defend a shot")
       val result = keeper.defend
 
-      then("he should be able to defend this shot")
+      then("he should be able to hold the ball")
       assert(result === Shot.Hold)
-      
     }
-
-    "send the ball to a corner kick" in {
+    
+    "sucessfully hold a shot with a success in a attribute test after intercepting the ball" in {
+      
       given("a keeper")
       val keeper = new {
-        val dice = new SeqDice(6, Seq(3, 6))
+        val dice: Dice = new SeqDice(faces=6, results=Seq(2, 2))
+        val intercept = 3
+        val hold = 3
+      } with Keeper
+
+      when("he tries to defend a shot")
+      val result = keeper.defend
+
+      then("he should be able to hold the ball")
+      assert(result === Shot.Hold)
+    }
+
+    "send the ball to a corner kick when he cannot hold the ball, but has success in a attribute check" in {
+      given("a keeper")
+      val keeper = new {
+        val dice = new SeqDice(faces=6, results=Seq(3, 5, 2))
+        val intercept = 3
+        val hold = 2
       } with Keeper
       when("he tries to defend a shot")
       val result = keeper.defend
 
       then("he should be able to send the ball to a corner kick")
       assert(result === Shot.CornerKick)
-
     }
     
-    "parry the ball" in {
+    "parry the ball safely when he cannot hold the ball, but has and auto-success in the attribute check" in {
       given("a keeper")
       val keeper = new {
-        val dice = new SeqDice(6, Seq(3, 1))
+        val dice = new SeqDice(6, Seq(3, 4, 6))
+        val intercept = 3
+        val hold = 3
       } with Keeper
       
       when("he tries to defend a shot")
       val result = keeper.defend
       
       then("he should be able to parry the ball")
-      assert(result === Shot.Parry)
-      
+      assert(result === Shot.ParrySafely)
     }
-    
+
+    "just parry the ball when he cannot hold the ball nor send it to a safer place" in {
+      given("a keeper")
+      val keeper = new {
+        val dice = new SeqDice(6, Seq(3, 4, 4))
+        val intercept = 3
+        val hold = 3
+      } with Keeper
+
+      when("he tries to defend a shot")
+      val result = keeper.defend
+
+      then("he should be able to parry the ball")
+      assert(result === Shot.Parry)
+    }
+
+    "parry the ball to the goal when he intercepted, but had an auto-failure trying to hold" in {
+      given("a keeper")
+      val keeper = new {
+        val dice = new SeqDice(6, Seq(3, 1))
+        val intercept = 3
+        val hold = 3
+      } with Keeper
+
+      when("he tries to defend a shot")
+      val result = keeper.defend
+
+      then("he should be able to parry the ball")
+      assert(result === Shot.CouldNotStop)
+    }
+
+    "parry the ball to the goal when he intercepted, could not hold and had an auto-failure trying to parry" in {
+      given("a keeper")
+      val keeper = new {
+        val dice = new SeqDice(6, Seq(3, 4, 1))
+        val intercept = 3
+        val hold = 3
+      } with Keeper
+
+      when("he tries to defend a shot")
+      val result = keeper.defend
+
+      then("he should be able to parry the ball")
+      assert(result === Shot.CouldNotStop)
+    }
+
   }
   
 }

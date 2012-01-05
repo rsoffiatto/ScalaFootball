@@ -1,6 +1,6 @@
 package br.com.reduso.football
 
-import br.com.reduso.football.Shot.ShotResult
+import br.com.reduso.football.Shot.{Parry, ParrySafely, Hold, CouldNotStop, Goal, ShotResult, CornerKick}
 
 
 /**
@@ -23,26 +23,39 @@ import br.com.reduso.football.Shot.ShotResult
 trait Keeper {
 
   require(dice.faces == 6)
-
+  require(intercept > 1 && intercept < 6)
+  require(hold > 1 && hold < 6)
+  
   val dice: Dice
+  val intercept: Int
+  val hold: Int
 
   def defend: ShotResult = {
     
-    dice.roll match {
-      case 1 => Shot.Goal
-      case it if 2 until 5 contains it => parry
-      case 6 => Shot.Hold
+    AttributeTest(dice).test(intercept) match {
+      case AttributeTest.AutoFailure | AttributeTest.Failure => Goal
+      case AttributeTest.AutoSuccess => Shot.Hold
+      case AttributeTest.Success => tryToHold
     }
   }
   
-  private def parry: ShotResult = {
-    dice.roll match {
-      case 1 => Shot.Parry
-      case it if 2 until 5 contains it => Shot.Parry
-      case 6 => Shot.CornerKick
+  private def tryToHold: ShotResult = {
+    AttributeTest(dice).test(hold) match {
+      case AttributeTest.AutoFailure => CouldNotStop
+      case AttributeTest.Failure => parry
+      case AttributeTest.AutoSuccess | AttributeTest.Success => Hold
     }
   }
 
+  private def parry: ShotResult = {
+    AttributeTest(dice).test(hold) match {
+      case AttributeTest.AutoFailure => CouldNotStop
+      case AttributeTest.Failure => Parry
+      case AttributeTest.Success => CornerKick
+      case AttributeTest.AutoSuccess => ParrySafely 
+    }
+  }
+  
 }
 
 object Shot {
@@ -51,6 +64,8 @@ object Shot {
   case object Hold extends ShotResult
   case object CornerKick extends ShotResult
   case object Parry extends ShotResult
+  case object ParrySafely extends ShotResult
+  case object CouldNotStop extends ShotResult
   case object Goal extends ShotResult
   case object GoalKick extends ShotResult
 
