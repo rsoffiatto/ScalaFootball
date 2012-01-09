@@ -27,6 +27,7 @@ import exceptions.NoMatchException
 class Player private (val dice: Dice,
                       val pass: Int,
                       val tackle: Int,
+                      val finishing: Int, 
                       val intercept: Int,
                       val hold: Int) extends Passer
                                       with Tackler
@@ -36,8 +37,8 @@ class Player private (val dice: Dice,
 
 object Player {
 
-  def apply(dice: Dice = Dice(6), pass:Int, tackle: Int, intercept: Int, hold: Int) = {
-    new Player(dice, pass, tackle, intercept, hold)
+  def apply(dice: Dice = Dice(6), pass:Int, tackle: Int, finishing: Int, intercept: Int, hold: Int) = {
+    new Player(dice=dice, pass=pass, tackle=tackle, finishing=finishing, intercept=intercept, hold=hold)
   }
 
 }

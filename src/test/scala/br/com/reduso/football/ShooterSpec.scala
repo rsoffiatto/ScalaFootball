@@ -26,32 +26,81 @@ class ShooterSpec extends WordSpec with GivenWhenThen {
 
   "A player who shoot" should {
 
-    "should be able to finalize the ball to the goal and score" in {
+    "should be able to finalize perfectly the ball to the goal and score" in {
       given("a player")
       val player = new {
         val dice:Dice = new TestDices.SuccessDice(6)
+        val finishing = 3
       } with Shooter
 
-      when("the player rightly shoot the ball to a empty goal")
-      val result = player.shoot(None)
+      and("a keeper doing perfecly")
+      val keeper = new {
+        val dice = new TestDices.SuccessDice(6)
+        val intercept = 5
+        val hold = 5
+      } with Keeper
+      
+      when("the player perfectly shoot the ball to the goal, even with the goalkeeper being perfectly")
+      val result = player.shoot(Some(keeper))
 
-      then("the result of the shoot must be a Goal")
+      then("the result of the shoot must be a goal")
       assert(result === Shot.Goal)
     }
 
-    "should be able to finalize the ball to the goal and miss" in {
+    "should be able to finalize the ball to the goal and, if the keeper cannot defend, score" in {
       given("a player")
       val player = new {
-        val dice:Dice = new TestDices.FailureDice(6)
+        val dice:Dice = new TestDices.ArbitraryDice(faces=6, results=2)
+        val finishing = 3
       } with Shooter
 
-      when("the player shoot the ball to a empty goal and misses")
-      val result = player.shoot(None)
+      and("a the keeper unable to defend")
+      val keeper = new {
+        val dice = new TestDices.ArbitraryDice(faces=6, results=5)
+        val intercept = 3
+        val hold = 3
+      } with Keeper
 
-      then("the result must be a Goal Kick")
-      assert(result === Shot.GoalKick)
+      when("the player shoot the ball to the goal")
+      val result = player.shoot(Some(keeper))
+
+      then("the result of the shoot must be a goal")
+      assert(result === Shot.Goal)
     }
 
-  }
+    "should be able to finalize the ball to the goal and, if the keeper can defend, do not score" in {
+      given("a player")
+      val player = new {
+        val dice:Dice = new TestDices.ArbitraryDice(faces=6, results=2)
+        val finishing = 3
+      } with Shooter
 
+      and("a the keeper making the defense")
+      val keeper = new {
+        val dice = new TestDices.ArbitraryDice(faces=6, results=2)
+        val intercept = 3
+        val hold = 3
+      } with Keeper
+
+      when("the player shoot the ball to the goal")
+      val result = player.shoot(Some(keeper))
+
+      then("the result of the shoot must not be a goal")
+      assert(result != Shot.Goal)
+    }
+    
+    "should be able to miss the target, giving a goal kick" in {
+      given("a player")
+      val player = new {
+        val dice:Dice = new TestDices.ArbitraryDice(faces=6, results=5)
+        val finishing = 3
+      } with Shooter
+
+      when("the player shoot badly the ball to the goal, even without a keeper")
+      val result = player.shoot(None)
+
+      then("the result of the shoot must be a goal kick")
+      assert(result === Shot.GoalKick)
+    }
+  }
 }

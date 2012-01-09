@@ -22,20 +22,23 @@ import br.com.reduso.football.Shot.{ShotResult,Goal,Hold,GoalKick}
 trait Shooter {
 
   require(dice.faces == 6)
+  require(finishing > 1 && finishing < 6)
 
   val dice: Dice
+  val finishing: Int
 
   def shoot(keeper: Option[Keeper]): ShotResult = {
-    keeper match {
-      case Some(keeper) => keeper.defend
-      case None => {
-        dice.roll match {
-          case 1 => GoalKick
-          case it if 2 until 5 contains it => Hold
-          case 6 => Goal
-        }
-      }
+    AttributeTest(dice).test(finishing) match {
+      case AttributeTest.AutoFailure | AttributeTest.Failure => Shot.GoalKick
+      case AttributeTest.Success => defend(keeper)
+      case AttributeTest.AutoSuccess => Shot.Goal
     }
   }
-
+   
+  def defend(keeper: Option[Keeper]): ShotResult = {
+    keeper match {
+      case Some(keeper) => keeper.defend
+      case None => Shot.Goal
+    }
+  }
 }
