@@ -27,7 +27,7 @@ class AttributeTestSpec  extends WordSpec with GivenWhenThen {
 
     "Be a auto-success when the dice rolls its max value" in {
       given("A attribute test")
-      val attributeTest = AttributeTest(new TestDices.SuccessDice(6))
+      val attributeTest = AttributeTest(new TestDices.SuccessDice)
 
       when("the dice roll results in its max value against a small attribute")
       val result = attributeTest.test(2)
@@ -38,7 +38,7 @@ class AttributeTestSpec  extends WordSpec with GivenWhenThen {
 
     "Be a auto-failure when the dice rolls its min value" in {
       given("A attribute test")
-      val attributeTest = AttributeTest(new TestDices.FailureDice(6))
+      val attributeTest = AttributeTest(new TestDices.FailureDice)
 
       when("the dice roll results in its min value against a big attribute")
       val result = attributeTest.test(5)
@@ -49,7 +49,7 @@ class AttributeTestSpec  extends WordSpec with GivenWhenThen {
 
     "Be successful when the attribute is bigger than the number rolled" in {
       given("A attribute test")
-      val attributeTest = AttributeTest(new TestDices.ArbitraryDice(faces=6, results=2))
+      val attributeTest = AttributeTest(new TestDices.ArbitraryDice(results=2))
 
       when("the dice roll result is smaller than the attribute")
       val result = attributeTest.test(3)
@@ -60,7 +60,7 @@ class AttributeTestSpec  extends WordSpec with GivenWhenThen {
 
     "Be successful when the attribute is equal than the number rolled" in {
       given("A attribute test")
-      val attributeTest = AttributeTest(new TestDices.ArbitraryDice(faces=6, results=3))
+      val attributeTest = AttributeTest(new TestDices.ArbitraryDice(results=3))
 
       when("the dice roll result is equal than the attribute")
       val result = attributeTest.test(3)
@@ -71,7 +71,7 @@ class AttributeTestSpec  extends WordSpec with GivenWhenThen {
 
     "Be a failure when the attribute is smaller than the number rolled" in {
       given("A attribute test")
-      val attributeTest = AttributeTest(new TestDices.ArbitraryDice(faces=6, results=5))
+      val attributeTest = AttributeTest(new TestDices.ArbitraryDice(results=5))
 
       when("the dice roll result is bigger than the attribute")
       val result = attributeTest.test(2)

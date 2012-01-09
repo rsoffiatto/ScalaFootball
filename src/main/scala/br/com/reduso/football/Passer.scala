@@ -24,8 +24,8 @@ import br.com.reduso.football.Pass.{PassResult, Missed, CouldNotHold, Completed}
  */
 trait Passer {
 
-  require(dice.faces == 6)
-  require(pass > 1 && pass  < 6)
+  require(dice.faces == Configuration.MAX_DICE_VALUE)
+  require(pass > 1 && pass < Configuration.MAX_DICE_VALUE)
 
   val dice: Dice
   val pass: Int

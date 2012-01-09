@@ -21,8 +21,8 @@ import br.com.reduso.football.Shot.{ShotResult,Goal,Hold,GoalKick}
 
 trait Shooter {
 
-  require(dice.faces == 6)
-  require(finishing > 1 && finishing < 6)
+  require(dice.faces == Configuration.MAX_DICE_VALUE)
+  require(finishing > 1 && finishing < Configuration.MAX_DICE_VALUE)
 
   val dice: Dice
   val finishing: Int

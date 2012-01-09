@@ -25,8 +25,8 @@ import br.com.reduso.football.Tackle.{TackleResult,Disposed,Loose,Failure}
  */
 trait Tackler {
 
-  require(dice.faces == 6)
-  require(tackle > 1 && tackle  < 6 )
+  require(dice.faces == Configuration.MAX_DICE_VALUE)
+  require(tackle > 1 && tackle  < Configuration.MAX_DICE_VALUE)
 
   val dice: Dice
   val tackle: Int

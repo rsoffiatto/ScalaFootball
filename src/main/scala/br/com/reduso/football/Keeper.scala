@@ -22,9 +22,9 @@ import br.com.reduso.football.Shot.{Parry, ParrySafely, Hold, CouldNotStop, Goal
 
 trait Keeper {
 
-  require(dice.faces == 6)
-  require(intercept > 1 && intercept < 6)
-  require(hold > 1 && hold < 6)
+  require(dice.faces == Configuration.MAX_DICE_VALUE)
+  require(intercept > 1 && intercept < Configuration.MAX_DICE_VALUE)
+  require(hold > 1 && hold < Configuration.MAX_DICE_VALUE)
   
   val dice: Dice
   val intercept: Int

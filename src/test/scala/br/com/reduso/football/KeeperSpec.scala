@@ -31,7 +31,7 @@ class KeeperSpec  extends WordSpec with GivenWhenThen {
       
       given("a keeper")
       val keeper = new {
-        val dice: Dice = new SeqDice(faces=6, results=Seq(6, 1))
+        val dice: Dice = new SeqDice(results=Seq(Configuration.MAX_DICE_VALUE, 1))
         val intercept = 3
         val hold = 3
       } with Keeper
@@ -47,7 +47,7 @@ class KeeperSpec  extends WordSpec with GivenWhenThen {
       
       given("a keeper")
       val keeper = new {
-        val dice: Dice = new SeqDice(faces=6, results=Seq(2, 2))
+        val dice: Dice = new SeqDice(results=Seq(2, 2))
         val intercept = 3
         val hold = 3
       } with Keeper
@@ -62,7 +62,7 @@ class KeeperSpec  extends WordSpec with GivenWhenThen {
     "send the ball to a corner kick when he cannot hold the ball, but has success in a attribute check" in {
       given("a keeper")
       val keeper = new {
-        val dice = new SeqDice(faces=6, results=Seq(3, 5, 2))
+        val dice = new SeqDice(results=Seq(3, 5, 2))
         val intercept = 3
         val hold = 2
       } with Keeper
@@ -76,7 +76,7 @@ class KeeperSpec  extends WordSpec with GivenWhenThen {
     "parry the ball safely when he cannot hold the ball, but has and auto-success in the attribute check" in {
       given("a keeper")
       val keeper = new {
-        val dice = new SeqDice(6, Seq(3, 4, 6))
+        val dice = new SeqDice(results=Seq(3, 4, Configuration.MAX_DICE_VALUE))
         val intercept = 3
         val hold = 3
       } with Keeper
@@ -91,7 +91,7 @@ class KeeperSpec  extends WordSpec with GivenWhenThen {
     "just parry the ball when he cannot hold the ball nor send it to a safer place" in {
       given("a keeper")
       val keeper = new {
-        val dice = new SeqDice(6, Seq(3, 4, 4))
+        val dice = new SeqDice(results=Seq(3, 4, 4))
         val intercept = 3
         val hold = 3
       } with Keeper
@@ -106,7 +106,7 @@ class KeeperSpec  extends WordSpec with GivenWhenThen {
     "parry the ball to the goal when he intercepted, but had an auto-failure trying to hold" in {
       given("a keeper")
       val keeper = new {
-        val dice = new SeqDice(6, Seq(3, 1))
+        val dice = new SeqDice(results=Seq(3, 1))
         val intercept = 3
         val hold = 3
       } with Keeper
@@ -121,7 +121,7 @@ class KeeperSpec  extends WordSpec with GivenWhenThen {
     "parry the ball to the goal when he intercepted, could not hold and had an auto-failure trying to parry" in {
       given("a keeper")
       val keeper = new {
-        val dice = new SeqDice(6, Seq(3, 4, 1))
+        val dice = new SeqDice(results=Seq(3, 4, 1))
         val intercept = 3
         val hold = 3
       } with Keeper

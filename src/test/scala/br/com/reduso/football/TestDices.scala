@@ -25,19 +25,19 @@ import org.scalatest.junit.JUnitRunner
 
 object TestDices {
 
-  class SuccessDice(faces: Int) extends Dice(faces) {
+  class SuccessDice(faces: Int =  Configuration.MAX_DICE_VALUE) extends Dice(faces) {
     override def roll = {
       this.faces
     }
   }
-
-  class FailureDice(faces: Int) extends Dice(faces) {
+  
+  class FailureDice(faces: Int =  Configuration.MAX_DICE_VALUE) extends Dice(faces) {
     override def roll = {
       1
     }
   }
 
-  class ArbitraryDice(faces: Int, results: Int) extends Dice(faces) {
+  class ArbitraryDice(faces: Int =  Configuration.MAX_DICE_VALUE, results: Int) extends Dice(faces) {
     require (results <= faces)
     require (results > 0)
 
@@ -46,7 +46,7 @@ object TestDices {
     }
   }
   
-  class SeqDice(faces: Int,  results: Seq[Int]) extends Dice(faces) {
+  class SeqDice(faces: Int =  Configuration.MAX_DICE_VALUE,  results: Seq[Int]) extends Dice(faces) {
 
     private val resultsIterator = results.toIterator
 
@@ -55,7 +55,7 @@ object TestDices {
     }
 
   }
-
+  
 }
 
 @RunWith(classOf[JUnitRunner])

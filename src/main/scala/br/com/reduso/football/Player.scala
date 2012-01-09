@@ -37,7 +37,7 @@ class Player private (val dice: Dice,
 
 object Player {
 
-  def apply(dice: Dice = Dice(6), pass:Int, tackle: Int, finishing: Int, intercept: Int, hold: Int) = {
+  def apply(dice: Dice = Dice(Configuration.MAX_DICE_VALUE), pass:Int, tackle: Int, finishing: Int, intercept: Int, hold: Int) = {
     new Player(dice=dice, pass=pass, tackle=tackle, finishing=finishing, intercept=intercept, hold=hold)
   }
 

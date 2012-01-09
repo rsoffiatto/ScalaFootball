@@ -29,13 +29,13 @@ class ShooterSpec extends WordSpec with GivenWhenThen {
     "should be able to finalize perfectly the ball to the goal and score" in {
       given("a player")
       val player = new {
-        val dice:Dice = new TestDices.SuccessDice(6)
+        val dice:Dice = new TestDices.SuccessDice
         val finishing = 3
       } with Shooter
 
       and("a keeper doing perfecly")
       val keeper = new {
-        val dice = new TestDices.SuccessDice(6)
+        val dice = new TestDices.SuccessDice
         val intercept = 5
         val hold = 5
       } with Keeper
@@ -50,13 +50,13 @@ class ShooterSpec extends WordSpec with GivenWhenThen {
     "should be able to finalize the ball to the goal and, if the keeper cannot defend, score" in {
       given("a player")
       val player = new {
-        val dice:Dice = new TestDices.ArbitraryDice(faces=6, results=2)
+        val dice:Dice = new TestDices.ArbitraryDice(results=2)
         val finishing = 3
       } with Shooter
 
       and("a the keeper unable to defend")
       val keeper = new {
-        val dice = new TestDices.ArbitraryDice(faces=6, results=5)
+        val dice = new TestDices.ArbitraryDice(results=5)
         val intercept = 3
         val hold = 3
       } with Keeper
@@ -71,13 +71,13 @@ class ShooterSpec extends WordSpec with GivenWhenThen {
     "should be able to finalize the ball to the goal and, if the keeper can defend, do not score" in {
       given("a player")
       val player = new {
-        val dice:Dice = new TestDices.ArbitraryDice(faces=6, results=2)
+        val dice:Dice = new TestDices.ArbitraryDice(results=2)
         val finishing = 3
       } with Shooter
 
       and("a the keeper making the defense")
       val keeper = new {
-        val dice = new TestDices.ArbitraryDice(faces=6, results=2)
+        val dice = new TestDices.ArbitraryDice(results=2)
         val intercept = 3
         val hold = 3
       } with Keeper
@@ -92,7 +92,7 @@ class ShooterSpec extends WordSpec with GivenWhenThen {
     "should be able to miss the target, giving a goal kick" in {
       given("a player")
       val player = new {
-        val dice:Dice = new TestDices.ArbitraryDice(faces=6, results=5)
+        val dice:Dice = new TestDices.ArbitraryDice(results=5)
         val finishing = 3
       } with Shooter
 

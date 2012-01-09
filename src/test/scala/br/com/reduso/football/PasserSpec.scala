@@ -30,13 +30,13 @@ class PasserSpec extends WordSpec with GivenWhenThen {
     "should be able to a pass the ball to another player in case of a auto success" in {
       given("a player A")
       val player1 = new {
-        val dice: Dice = new SuccessDice(faces=6)
+        val dice: Dice = new SuccessDice
         val pass = 2
       } with Passer
 
       and("a player B")
       val player2 = new {
-        val dice: Dice = new SuccessDice(faces=6)
+        val dice: Dice = new SuccessDice
         val pass = 2
       } with Passer
 
@@ -50,13 +50,13 @@ class PasserSpec extends WordSpec with GivenWhenThen {
     "should be able to miss a pass to another player in case of a auto failure" in {
       given("a player A")
       val player1 = new {
-        val dice: Dice = new FailureDice(faces=6)
+        val dice: Dice = new FailureDice
         val pass = 5
       } with Passer
 
       and("a player B")
       val player2 = new {
-        val dice: Dice = new SuccessDice(faces=6)
+        val dice: Dice = new SuccessDice
         val pass = 5
       } with Passer
 
@@ -70,13 +70,13 @@ class PasserSpec extends WordSpec with GivenWhenThen {
     "should be able to pass a ball to a player who cannot get hold of it in case of auto failure from the receiver" in {
       given("a player A")
       val player1 = new {
-        val dice: Dice = new SuccessDice(faces=6)
+        val dice: Dice = new SuccessDice
         val pass = 5
       } with Passer
 
       and("a player B")
       val player2 = new {
-        val dice: Dice = new FailureDice(faces=6)
+        val dice: Dice = new FailureDice
         val pass = 5
       } with Passer
 
@@ -90,13 +90,13 @@ class PasserSpec extends WordSpec with GivenWhenThen {
     "should be able to pass a ball to another player in case of success in the attribute check by a low roll" in {
       given("a player A with pass attribute of 3 and next roll of dice of 2")
       val player1 = new {
-        val dice = new ArbitraryDice(faces=6, results=2)
+        val dice = new ArbitraryDice(results=2)
         val pass = 3        
       } with Passer
       
       and("a player B with auto-success receive")
       val player2 = new {
-        val dice = new SuccessDice(faces=6)
+        val dice = new SuccessDice
         val pass = 2
       } with Passer
       
@@ -110,13 +110,13 @@ class PasserSpec extends WordSpec with GivenWhenThen {
     "should be able to pass a ball to another player in case of success in the attribute check by a equal row" in {
       given("a player A with a pass attribute of 3 and next roll of dice of 3")
       val player1 = new {
-        val dice = new ArbitraryDice(faces=6, results=3)
+        val dice = new ArbitraryDice(results=3)
         val pass = 3
       } with Passer
 
       and("a player B with auto-success receive")
       val player2 = new {
-        val dice = new SuccessDice(faces=6)
+        val dice = new SuccessDice
         val pass = 2
       } with Passer
 
@@ -130,13 +130,13 @@ class PasserSpec extends WordSpec with GivenWhenThen {
     "should be able to miss a pass a ball to another player in case of failure in the attribute check" in {
       given("a player A with a pass attribute of 3 and next roll of dice of 4")
       val player1 = new {
-        val dice = new ArbitraryDice(faces=6, results=4)
+        val dice = new ArbitraryDice(results=4)
         val pass = 3
       } with Passer
 
       and("a player B with auto-success receive")
       val player2 = new {
-        val dice = new SuccessDice(faces=6)
+        val dice = new SuccessDice
         val pass = 2
       } with Passer
 
@@ -150,13 +150,13 @@ class PasserSpec extends WordSpec with GivenWhenThen {
     "should be able to fail to hold the ball in case of failure in the attribute check of the receiver" in {
       given("a player A with a auto-success on the pass")
       val player1 = new {
-        val dice = new SuccessDice(faces=6)
+        val dice = new SuccessDice
         val pass = 5
       } with Passer
 
       and("a player B with auto-failure receive")
       val player2 = new {
-        val dice = new FailureDice(faces=6)
+        val dice = new FailureDice
         val pass = 2
       } with Passer
 

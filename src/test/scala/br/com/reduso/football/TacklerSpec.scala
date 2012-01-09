@@ -29,13 +29,13 @@ class TacklerSpec extends WordSpec with GivenWhenThen {
     "should be able to tackle and dispose the ball from another player in case of auto-success" in {
       given("a player A")
       val player1 = new {
-        val dice:Dice = new TestDices.SuccessDice(6)
+        val dice:Dice = new TestDices.SuccessDice
         val tackle = 2
       } with Tackler
 
       and("a player B")
       val player2 = new {
-        val dice:Dice = new TestDices.SuccessDice(6)
+        val dice:Dice = new TestDices.SuccessDice
         val tackle = 2
       } with Tackler
 
@@ -49,13 +49,13 @@ class TacklerSpec extends WordSpec with GivenWhenThen {
     "should be able to tackle and dispose the ball from another player in case of success in a attribute-check" in {
       given("a player A")
       val player1 = new {
-        val dice:Dice = new TestDices.ArbitraryDice(faces=6, results=2)
+        val dice:Dice = new TestDices.ArbitraryDice(results=2)
         val tackle = 3
       } with Tackler
 
       and("a player B")
       val player2 = new {
-        val dice:Dice = new TestDices.FailureDice(faces=6)
+        val dice:Dice = new TestDices.FailureDice
         val tackle = 2
       } with Tackler
 
@@ -69,13 +69,13 @@ class TacklerSpec extends WordSpec with GivenWhenThen {
     "should be able to tackle, but be unable to dispose the ball of another player in case of auto-failure" in {
       given("a player A")
       val player1 = new {
-        val dice:Dice = new TestDices.FailureDice(6)
+        val dice:Dice = new TestDices.FailureDice
         val tackle = 2
       } with Tackler
 
       and("a player B")
       val player2 = new {
-        val dice:Dice = new TestDices.FailureDice(6)
+        val dice:Dice = new TestDices.FailureDice
         val tackle = 2
       } with Tackler
 
@@ -89,13 +89,13 @@ class TacklerSpec extends WordSpec with GivenWhenThen {
     "should be able to tackle, but be unable to dispose the ball of another player in case of failure in attribute check" in {
       given("a player A")
       val player1 = new {
-        val dice:Dice = new TestDices.ArbitraryDice(faces=6, results=3)
+        val dice:Dice = new TestDices.ArbitraryDice(results=3)
         val tackle = 2
       } with Tackler
 
       and("a player B")
       val player2 = new {
-        val dice:Dice = new TestDices.FailureDice(6)
+        val dice:Dice = new TestDices.FailureDice
         val tackle = 2
       } with Tackler
 
@@ -109,13 +109,13 @@ class TacklerSpec extends WordSpec with GivenWhenThen {
     "should be able to prevent the ball from being completely disposed by a attribute check success player" in {
       given("a player A")
       val player1 = new {
-        val dice:Dice = new TestDices.ArbitraryDice(faces=6, results=2)
+        val dice:Dice = new TestDices.ArbitraryDice(results=2)
         val tackle = 2
       } with Tackler
 
       and("a player B")
       val player2 = new {
-        val dice:Dice = new TestDices.SuccessDice(6)
+        val dice:Dice = new TestDices.SuccessDice
         val tackle = 2
       } with Tackler
 
